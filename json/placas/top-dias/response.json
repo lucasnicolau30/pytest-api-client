@@ -1,0 +1,5 @@
+{
+  "_comment": "Response template for /placas/top-dias endpoint. Replace with actual response from API.",
+  "status": 200,
+  "data": []
+}
