@@ -1,5 +1,15 @@
-import os 
+import os
+from pathlib import Path
 from .utils import build_path
+
+# Load .env file if it exists
+try:
+    from dotenv import load_dotenv
+    env_file = Path(__file__).parent.parent / ".env"
+    load_dotenv(env_file)
+except ImportError:
+    pass  # python-dotenv not installed, use environment variables only
+
 
 def get_base_url():
     """Get base URL from environment or use default."""
@@ -20,8 +30,8 @@ def get_test_config():
         "base_url": get_base_url(),
         "headers": get_headers(),
         "timeout": int(os.getenv("TIMEOUT", 10)),
-        "repeticoes": int(os.getenv("REPETICOES", 5)),
-        "limite_tempo_medio": int(os.getenv("LIMITE_TEMPO_MEDIO", 30)),
+        "repetitions": int(os.getenv("REPETITIONS", 5)),
+        "max_average_time": int(os.getenv("MAX_AVERAGE_TIME", 30)),
     }
 
 def get_endpoint_config(endpoint_id):
@@ -34,7 +44,7 @@ def get_endpoint_config(endpoint_id):
     Returns:
         dict with endpoint-specific config
     """
-    csv_filename = f"{endpoint_id}_results.csv"
+    csv_filename = f"{endpoint_id.replace('/', '_')}_results.csv"
     
     return {
         "endpoint_id": endpoint_id,

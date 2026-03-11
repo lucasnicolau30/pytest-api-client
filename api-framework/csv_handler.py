@@ -6,56 +6,56 @@ import csv
 import os
 
 
-def initialize_csv(arquivo_csv):
+def initialize_csv(csv_file):
     """
     Create and initialize CSV file with headers.
     
     Args:
-        arquivo_csv: Path to the CSV file
+        csv_file: Path to the CSV file
     """
     # Create directory if not exists
-    diretorio = os.path.dirname(arquivo_csv)
-    if diretorio and not os.path.exists(diretorio):
-        os.makedirs(diretorio, exist_ok=True)
+    directory = os.path.dirname(csv_file)
+    if directory and not os.path.exists(directory):
+        os.makedirs(directory, exist_ok=True)
     
-    with open(arquivo_csv, "w", newline="", encoding="utf-8") as csvfile:
+    with open(csv_file, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow([
-            "Cenário",
-            "Parâmetros",
-            "Status Esperado",
-            "Status Real",
-            "Tempo Médio (s)",
-            "Tempo Mínimo (s)",
-            "Tempo Máximo (s)",
-            "Sucesso"
+            "Scenario",
+            "Parameters",
+            "Expected Status",
+            "Actual Status",
+            "Average Time (s)",
+            "Min Time (s)",
+            "Max Time (s)",
+            "Success"
         ])
 
 
-def append_result(arquivo_csv, descricao, params, status_esperado, status_real, tempo_medio, tempo_minimo, tempo_maximo, sucesso):
+def append_result(csv_file, description, params, expected_status, actual_status, average_time, min_time, max_time, success):
     """
     Append a test result row to CSV.
     
     Args:
-        arquivo_csv: Path to CSV file
-        descricao: Scenario description
+        csv_file: Path to CSV file
+        description: Scenario description
         params: Request parameters dict
-        status_esperado: Expected HTTP status
-        status_real: Actual HTTP status
-        tempo_medio: Average response time
-        tempo_minimo: Minimum response time
-        tempo_maximo: Maximum response time
-        sucesso: Whether test passed
+        expected_status: Expected HTTP status
+        actual_status: Actual HTTP status
+        average_time: Average response time
+        min_time: Minimum response time
+        max_time: Maximum response time
+        success: Whether test passed
     """
-    with open(arquivo_csv, "a", newline="", encoding="utf-8") as csvfile:
+    with open(csv_file, "a", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow([
-            descricao,
+            description,
             str(params),
-            status_esperado,
-            status_real,
-            round(tempo_medio, 3),
-            round(tempo_minimo, 3),
-            round(tempo_maximo, 3),
-            "OK" if sucesso else "FAIL"
+            expected_status,
+            actual_status,
+            round(average_time, 3),
+            round(min_time, 3),
+            round(max_time, 3),
+            "OK" if success else "FAILED"
         ])
