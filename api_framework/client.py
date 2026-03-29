@@ -11,7 +11,7 @@ class APIClient:
         self.timeout = timeout
 
         if headers:
-            self.session.headers.update(headers)
+            self.session.headers.update(headers) 
 
     def get(self, endpoint, **kwargs):
         """Perform a GET request and attach custom response timing."""

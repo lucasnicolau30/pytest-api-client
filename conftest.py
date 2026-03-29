@@ -14,9 +14,9 @@ def client():
     """Create API client for each test."""
     config = get_test_config()
     api_client = APIClient(
-        base_url=config["base_url"],
-        headers=config["headers"],
-        timeout=config["timeout"]
+        base_url = config["base_url"],
+        headers = config["headers"],
+        timeout = config["timeout"]
     )
     yield api_client
     api_client.close()

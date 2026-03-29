@@ -3,26 +3,10 @@ Generic test template for API endpoints.
 
 INSTRUCTIONS:
 1. Copy this file and rename to test_<endpoint_name>.py
-2. Create/update api_framework/scenarios.py with:
-   - SCENARIOS list with your endpoint test cases
-   - validate_response() function for your API schema
-3. Update ENDPOINT constant
+2. Copy scenarios.py and rename to scenarios_<endpoint_name>.py
+3. Update both files with your endpoint-specific configuration
+4. Run tests with: pytest -v tests/test_<endpoint_name>.py
 
-Example:
-    create: api_framework/scenarios_users.py
-    copy: tests/test.py → tests/test_users.py
-    
-    api_framework/scenarios_users.py:
-        SCENARIOS = [
-            ({}, "Without parameters", 200),
-            ({"page": 1}, "With page parameter", 200),
-        ]
-        def validate_response(data):
-            assert isinstance(data, list)
-    
-    tests/test_users.py:
-        import scenarios_users as scenarios
-        ENDPOINT = "users/list"
 """
 
 import pytest
@@ -31,15 +15,14 @@ from api_framework.utils import calculate_statistics
 from api_framework.csv_handler import initialize_csv, append_result
 
 # TODO: Import your endpoint's scenarios and validation
-# Example: from api_framework import scenarios_users as scenarios
 # For now, it imports the template scenarios:
-from api_framework.scenarios import SCENARIOS, validate_response
+from tests.scenarios import SCENARIOS, validate_response
 
 
 # ===============================================================
 # CONFIGURATION
 # ===============================================================
-ENDPOINT = "users/list"  # TODO: Change to your endpoint (e.g., "users/list", "products/search")
+ENDPOINT = "<endpoint_name>"  # TODO: Change to your endpoint 
 CONFIG = get_test_config()
 ENDPOINT_CONFIG = get_endpoint_config(ENDPOINT)
 
@@ -64,7 +47,7 @@ def setup_csv():
 def test_endpoint(client, params, description, expected_status):
     """
     Test API endpoint with scenarios and validation.
-    
+
     Args:
         client: APIClient fixture (from conftest.py)
         params: Query parameters for the request
@@ -74,24 +57,22 @@ def test_endpoint(client, params, description, expected_status):
     times = []
     success = True
     actual_status = None
-    
-    endpoint = "users/list"  # TODO: Change to your endpoint path
-    
+
     print(f"\n=== Scenario: {description} ===")
     print(f"Parameters: {params}")
-    
+
     # ============================================================
     # EXECUTE REQUESTS
     # ============================================================
     for i in range(CONFIG["repetitions"]):
-        resp = client.get(endpoint, params=params)
-        
+        resp = client.get(ENDPOINT, params=params)
+
         duration = resp.elapsed_custom
         times.append(duration)
         actual_status = resp.status_code
-        
+
         print(f"➡️ Attempt {i+1}: {actual_status} in {duration:.3f}s")
-        
+
         # ====================================================================
         # HANDLE ERROR RESPONSES (status != 200)
         # ====================================================================
@@ -102,7 +83,7 @@ def test_endpoint(client, params, description, expected_status):
                 print(f"❌ Incorrect error: received {actual_status}, expected {expected_status}")
                 success = False
             break
-        
+
         # ====================================================================
         # VALIDATE SUCCESS RESPONSES
         # ====================================================================
@@ -110,7 +91,7 @@ def test_endpoint(client, params, description, expected_status):
             success = False
             print(f"❌ Unexpected status: {actual_status}, expected: {expected_status}")
             break
-        
+
         # Validate response structure
         try:
             data = resp.json()
@@ -119,7 +100,7 @@ def test_endpoint(client, params, description, expected_status):
             success = False
             print(f"❌ Response validation failed: {e}")
             break
-    
+
     # ============================================================
     # CALCULATE STATISTICS
     # ============================================================
@@ -127,12 +108,12 @@ def test_endpoint(client, params, description, expected_status):
     average = stats["average"]
     min_time = stats["min"]
     max_time = stats["max"]
-    
+
     print(f"\nResults — {description}")
     print(f"  Expected Status: {expected_status}")
     print(f"  Actual Status: {actual_status}")
     print(f"  Average: {average:.3f}s | Min: {min_time:.3f}s | Max: {max_time:.3f}s")
-    
+
     # ============================================================
     # SAVE TO CSV
     # ============================================================
@@ -147,11 +128,10 @@ def test_endpoint(client, params, description, expected_status):
         max_time,
         success
     )
-    
+
     # ============================================================
     # ASSERT TIME LIMIT (only for successful responses)
     # ============================================================
     if expected_status == 200:
         assert average < CONFIG["max_average_time"], \
             f"High average response time ({average:.2f}s) in {description}"
-

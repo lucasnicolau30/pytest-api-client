@@ -18,7 +18,7 @@ def initialize_csv(csv_file):
     if directory and not os.path.exists(directory):
         os.makedirs(directory, exist_ok=True)
     
-    with open(csv_file, "w", newline="", encoding="utf-8") as csvfile:
+    with open(csv_file, "w", newline = "", encoding = "utf-8") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow([
             "Scenario",
@@ -47,7 +47,7 @@ def append_result(csv_file, description, params, expected_status, actual_status,
         max_time: Maximum response time
         success: Whether test passed
     """
-    with open(csv_file, "a", newline="", encoding="utf-8") as csvfile:
+    with open(csv_file, "a", newline = "", encoding = "utf-8") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow([
             description,
