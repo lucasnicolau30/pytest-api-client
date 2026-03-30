@@ -161,7 +161,7 @@ It's just for you to **see what the API is returning** before writing tests.
 
 ```bash
 cd json
-cp fetch_route_template.py cp fetch_route_template.py fetch_route_<endpoint_name>.py
+cp fetch_route_template.py fetch_route_<endpoint_name>.py
 ```
 
 Edit `cp fetch_route_template.py fetch_route_<endpoint_name>.py`:
