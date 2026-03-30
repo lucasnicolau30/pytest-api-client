@@ -1,5 +1,8 @@
 # pytest-api-client Framework
 
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
+![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=flat&logo=pytest&logoColor=white)
+
 Modularized framework for API testing with pytest, designed to be reusable and scalable.
 
 ## 📁 Project Structure
@@ -28,6 +31,12 @@ pytest-api-client/
 ├─ requirements.txt
 └─ README.md
 ```
+
+## 💡 Context
+
+Developed during a QA internship to automate API testing across multiple endpoints.
+Achieved 98% route accuracy across positive/negative scenarios, status code validation
+and JSON response structure verification. Results are exported to CSV for traceability.
 
 ## 🚀 Quick Start
 
