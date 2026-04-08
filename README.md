@@ -267,3 +267,7 @@ CONFIG["headers"]["Authorization"] = "Bearer token"
 - [pytest](https://docs.pytest.org/)
 - [requests](https://requests.readthedocs.io/)
 - [python-dotenv](https://python-dotenv.readthedocs.io/)
+
+## 👨‍💻 Author
+
+**Lucas Nicolau** — Software Engineering Student at [@UFAM](https://www.ufam.edu.br).
