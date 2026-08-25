@@ -2,6 +2,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 ![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=flat&logo=pytest&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 Read in: Português | [English](README.md)
 
@@ -283,6 +284,10 @@ CONFIG["headers"]["Authorization"] = "Bearer token"
 - [pytest](https://docs.pytest.org/)
 - [requests](https://requests.readthedocs.io/)
 - [python-dotenv](https://python-dotenv.readthedocs.io/)
+
+## Licença
+
+Este projeto está licenciado sob a [Licença MIT](LICENSE).
 
 ## Autor
 
