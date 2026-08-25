@@ -3,9 +3,11 @@
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 ![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=flat&logo=pytest&logoColor=white)
 
+Read in: [Português](README.pt-br.md) | English
+
 Modularized framework for API testing with pytest, designed to be reusable and scalable.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 pytest-api-client/
@@ -32,13 +34,13 @@ pytest-api-client/
 └─ README.md
 ```
 
-## 💡 Context
+## Context
 
 Developed during a QA internship to automate API testing across multiple endpoints.
 Achieved 98% route accuracy across positive/negative scenarios, status code validation
 and JSON response structure verification. Results are exported to CSV for traceability.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Setup
 
@@ -67,11 +69,13 @@ cp fetch_route_template.py fetch_route_<endpoint_name>.py
 ```
 
 Edit `fetch_route_<endpoint_name>.py`:
+
 ```python
 ENDPOINT = "<endpoint_name>"  # Change to your endpoint path
 ```
 
 Run:
+
 ```bash
 python fetch_route_<endpoint_name>.py
 # 200
@@ -90,6 +94,7 @@ cp tests/test_base.py tests/test_<endpoint_name>.py
 ```
 
 Edit `tests/scenarios_<endpoint_name>.py`:
+
 ```python
 SCENARIOS = [
     ({}, "Without parameters", 200),
@@ -101,6 +106,7 @@ def validate_response(data):
 ```
 
 Edit `tests/test_<endpoint_name>.py`:
+
 ```python
 from tests import scenarios_<endpoint_name> as scenarios
 
@@ -114,7 +120,7 @@ pytest tests/test_<endpoint_name>.py -v
 # Results saved to: csv/<endpoint_name>_results.csv
 ```
 
-## 🔧 The Fetch Script
+## The Fetch Script
 
 The script in `json/fetch_route_template.py` is a **simple visualization tool** that uses `BASE_URL` from your `.env`:
 
@@ -134,28 +140,32 @@ It's just for you to **see what the API is returning** before writing tests.
 
 **Does NOT create files, does NOT save anything, just PRINTS!**
 
-## 📊 Components
+## Components
 
 ### `config.py` - Configuration
+
 - Loads variables from `.env`
 - Provides defaults if `.env` doesn't exist
 - `get_test_config()` - Global config
 - `get_endpoint_config(endpoint)` - Per-endpoint config (for CSV naming)
 
 ### `client.py` - HTTP Client
+
 - Automatic timing with `resp.elapsed_custom`
 - Customizable headers
 - Configurable timeout
 - Builds full URL from `BASE_URL + endpoint`
 
 ### `csv_handler.py` - Results
+
 - `initialize_csv()` - Creates file with headers
 - `append_result()` - Adds result row
 
 ### `conftest.py` - Fixtures
+
 - `client` - Fixture for all tests (scoped per function)
 
-## 📝 Complete Example
+## Complete Example
 
 ### Step 1: Document
 
@@ -165,12 +175,14 @@ cp fetch_route_template.py fetch_route_<endpoint_name>.py
 ```
 
 Edit `cp fetch_route_template.py fetch_route_<endpoint_name>.py`:
+
 ```python
 ENDPOINT = "<endpoint_name>"  # Change to your endpoint
 fetch_endpoint(ENDPOINT)
 ```
 
 Run:
+
 ```bash
 python cp fetch_route_template.py fetch_route_<endpoint_name>.py
 # 200
@@ -185,6 +197,7 @@ cp tests/scenarios.py tests/scenarios_<endpoint_name>.py
 ```
 
 Edit `tests/scenarios_<endpoint_name>.py`:
+
 ```python
 SCENARIOS = [
     ({}, "Without parameters", 200),
@@ -203,6 +216,7 @@ cp tests/test_base.py tests/test_<endpoint_name>.py
 ```
 
 Edit `tests/test_<endpoint_name>.py`:
+
 ```python
 from tests import scenarios_<endpoint_name> as scenarios
 
@@ -210,12 +224,13 @@ ENDPOINT = "<endpoint_name>"  # Change to your endpoint
 ```
 
 Run:
+
 ```bash
 pytest tests/test_<endpoint_name>.py -v
 # Results in: csv/<endpoint_name>_results.csv
 ```
 
-## ⚙️ Customization
+## Customization
 
 ### Custom Validation
 
@@ -230,6 +245,7 @@ def validate_response(data):
 ### Custom Headers
 
 Edit `.env` or override in test:
+
 ```python
 from api_framework.config import get_test_config
 
@@ -237,37 +253,37 @@ CONFIG = get_test_config()
 CONFIG["headers"]["Authorization"] = "Bearer token"
 ```
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
-| Problem | Solution |
-|---------|----------|
-| `ModuleNotFoundError: dotenv` | `pip install python-dotenv` |
-| `Client fixture not found` | Check if `conftest.py` is in root |
-| CSV not created | Check if `csv/` directory exists (auto-created) |
-| URL not recognized | Check `BASE_URL` in `.env` |
+| Problem                       | Solution                                        |
+| ----------------------------- | ----------------------------------------------- |
+| `ModuleNotFoundError: dotenv` | `pip install python-dotenv`                     |
+| `Client fixture not found`    | Check if `conftest.py` is in root               |
+| CSV not created               | Check if `csv/` directory exists (auto-created) |
+| URL not recognized            | Check `BASE_URL` in `.env`                      |
 
-## 📚 Environment Variables
+## Environment Variables
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `BASE_URL` | `http://localhost:8000` | API base URL |
-| `TIMEOUT` | `10` | Timeout in seconds |
-| `REPETITIONS` | `5` | Repetitions per scenario |
-| `MAX_AVERAGE_TIME` | `30` | Time limit in seconds |
+| Variable           | Default                 | Description              |
+| ------------------ | ----------------------- | ------------------------ |
+| `BASE_URL`         | `http://localhost:8000` | API base URL             |
+| `TIMEOUT`          | `10`                    | Timeout in seconds       |
+| `REPETITIONS`      | `5`                     | Repetitions per scenario |
+| `MAX_AVERAGE_TIME` | `30`                    | Time limit in seconds    |
 
-## 🚀 Next Steps
+## Next Steps
 
 1. Create `.env` with your URLs
 2. Document your routes with `fetch_route_template.py`
 3. Create tests by copying `tests/test_base.py`
 4. Run and analyze results in `csv/`
 
-## 📖 References
+## References
 
 - [pytest](https://docs.pytest.org/)
 - [requests](https://requests.readthedocs.io/)
 - [python-dotenv](https://python-dotenv.readthedocs.io/)
 
-## 👨‍💻 Author
+## Author
 
-**Lucas Nicolau** — Software Engineering Student at [@UFAM](https://www.ufam.edu.br).
+**Lucas Nicolau** — Software Engineering Student at @UFAM
