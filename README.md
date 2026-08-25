@@ -291,4 +291,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Author
 
-**Lucas Nicolau** — Software Engineering Student at @UFAM
+Lucas Nicolau — Software Engineering Student at @UFAM
