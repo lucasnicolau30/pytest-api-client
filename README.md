@@ -4,7 +4,7 @@
 ![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=flat&logo=pytest&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-Read in: [Português](README.pt-br.md) | English
+Read in: [Português](README.pt.md) | English
 
 Modularized framework for API testing with pytest, designed to be reusable and scalable.
 
